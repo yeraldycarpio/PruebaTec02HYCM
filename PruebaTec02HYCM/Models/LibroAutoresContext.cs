@@ -18,13 +18,14 @@ namespace PruebaTec02HYCM.Models
 
         public virtual DbSet<Autore> Autores { get; set; } = null!;
         public virtual DbSet<Libro> Libros { get; set; } = null!;
+        public virtual DbSet<Libros2> Libros2s { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server= DESKTOP-OAO2BUA;Database =LibroAutores;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-OAO2BUA;Database =LibroAutores;Integrated Security=True");
             }
         }
 
@@ -62,6 +63,30 @@ namespace PruebaTec02HYCM.Models
                     .WithMany(p => p.Libros)
                     .HasForeignKey(d => d.AutorId)
                     .HasConstraintName("FK__Libros__AutorId__398D8EEE");
+            });
+
+            modelBuilder.Entity<Libros2>(entity =>
+            {
+                entity.ToTable("Libros2");
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.GeneroLite)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Imagen).HasColumnName("imagen");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Autor)
+                    .WithMany(p => p.Libros2s)
+                    .HasForeignKey(d => d.AutorId)
+                    .HasConstraintName("FK__Libros2__AutorId__3C69FB99");
             });
 
             OnModelCreatingPartial(modelBuilder);

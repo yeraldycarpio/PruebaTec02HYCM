@@ -8,6 +8,7 @@ namespace PruebaTec02HYCM.Models
         public Autore()
         {
             Libros = new HashSet<Libro>();
+            Libros2s = new HashSet<Libros2>();
         }
 
         public int AutorId { get; set; }
@@ -15,5 +16,6 @@ namespace PruebaTec02HYCM.Models
         public string? Nacionalidad { get; set; }
 
         public virtual ICollection<Libro> Libros { get; set; }
+        public virtual ICollection<Libros2> Libros2s { get; set; }
     }
 }

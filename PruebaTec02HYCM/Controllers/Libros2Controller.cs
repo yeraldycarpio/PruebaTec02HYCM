@@ -9,90 +9,90 @@ using PruebaTec02HYCM.Models;
 
 namespace PruebaTec02HYCM.Controllers
 {
-    public class LibroesController : Controller
+    public class Libros2Controller : Controller
     {
         private readonly LibroAutoresContext _context;
 
-        public LibroesController(LibroAutoresContext context)
+        public Libros2Controller(LibroAutoresContext context)
         {
             _context = context;
         }
 
-        // GET: Libroes
+        // GET: Libros2
         public async Task<IActionResult> Index()
         {
-            var libroAutoresContext = _context.Libros.Include(l => l.Autor);
+            var libroAutoresContext = _context.Libros2s.Include(l => l.Autor);
             return View(await libroAutoresContext.ToListAsync());
         }
 
-        // GET: Libroes/Details/5
+        // GET: Libros2/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Libros == null)
+            if (id == null || _context.Libros2s == null)
             {
                 return NotFound();
             }
 
-            var libro = await _context.Libros
+            var libros2 = await _context.Libros2s
                 .Include(l => l.Autor)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (libro == null)
+            if (libros2 == null)
             {
                 return NotFound();
             }
 
-            return View(libro);
+            return View(libros2);
         }
 
-        // GET: Libroes/Create
+        // GET: Libros2/Create
         public IActionResult Create()
         {
             ViewData["AutorId"] = new SelectList(_context.Autores, "AutorId", "AutorId");
             return View();
         }
 
-        // POST: Libroes/Create
+        // POST: Libros2/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,GeneroLite,Descripcion,AutorId")] Libro libro)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,GeneroLite,Descripcion,AutorId,Imagen")] Libros2 libros2)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(libro);
+                _context.Add(libros2);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AutorId"] = new SelectList(_context.Autores, "AutorId", "AutorId", libro.AutorId);
-            return View(libro);
+            ViewData["AutorId"] = new SelectList(_context.Autores, "AutorId", "AutorId", libros2.AutorId);
+            return View(libros2);
         }
 
-        // GET: Libroes/Edit/5
+        // GET: Libros2/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Libros == null)
+            if (id == null || _context.Libros2s == null)
             {
                 return NotFound();
             }
 
-            var libro = await _context.Libros.FindAsync(id);
-            if (libro == null)
+            var libros2 = await _context.Libros2s.FindAsync(id);
+            if (libros2 == null)
             {
                 return NotFound();
             }
-            ViewData["AutorId"] = new SelectList(_context.Autores, "AutorId", "AutorId", libro.AutorId);
-            return View(libro);
+            ViewData["AutorId"] = new SelectList(_context.Autores, "AutorId", "AutorId", libros2.AutorId);
+            return View(libros2);
         }
 
-        // POST: Libroes/Edit/5
+        // POST: Libros2/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,GeneroLite,Descripcion,AutorId")] Libro libro)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,GeneroLite,Descripcion,AutorId,Imagen")] Libros2 libros2)
         {
-            if (id != libro.Id)
+            if (id != libros2.Id)
             {
                 return NotFound();
             }
@@ -101,12 +101,12 @@ namespace PruebaTec02HYCM.Controllers
             {
                 try
                 {
-                    _context.Update(libro);
+                    _context.Update(libros2);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LibroExists(libro.Id))
+                    if (!Libros2Exists(libros2.Id))
                     {
                         return NotFound();
                     }
@@ -117,51 +117,51 @@ namespace PruebaTec02HYCM.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AutorId"] = new SelectList(_context.Autores, "AutorId", "AutorId", libro.AutorId);
-            return View(libro);
+            ViewData["AutorId"] = new SelectList(_context.Autores, "AutorId", "AutorId", libros2.AutorId);
+            return View(libros2);
         }
 
-        // GET: Libroes/Delete/5
+        // GET: Libros2/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Libros == null)
+            if (id == null || _context.Libros2s == null)
             {
                 return NotFound();
             }
 
-            var libro = await _context.Libros
+            var libros2 = await _context.Libros2s
                 .Include(l => l.Autor)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (libro == null)
+            if (libros2 == null)
             {
                 return NotFound();
             }
 
-            return View(libro);
+            return View(libros2);
         }
 
-        // POST: Libroes/Delete/5
+        // POST: Libros2/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Libros == null)
+            if (_context.Libros2s == null)
             {
-                return Problem("Entity set 'LibroAutoresContext.Libros'  is null.");
+                return Problem("Entity set 'LibroAutoresContext.Libros2s'  is null.");
             }
-            var libro = await _context.Libros.FindAsync(id);
-            if (libro != null)
+            var libros2 = await _context.Libros2s.FindAsync(id);
+            if (libros2 != null)
             {
-                _context.Libros.Remove(libro);
+                _context.Libros2s.Remove(libros2);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LibroExists(int id)
+        private bool Libros2Exists(int id)
         {
-          return (_context.Libros?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Libros2s?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -1,4 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using PruebaTec02HYCM.Models;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<LibroAutoresContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("cnn")));
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
